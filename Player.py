@@ -8,14 +8,11 @@ from direct.task import Task
 
 class Ship(SphereCollideObject):
     def __init__(self, loader: Loader, taskMgr: TaskManager, accept: Callable[[str, Callable], None], modelPath: str, parentNode: NodePath, nodeName:str, texPath: str, posVec: Vec3, scaleVec: float):
-        super(Ship, self).__init__(loader, modelPath, parentNode, nodeName, posVec, scaleVec + 8)
-        #super(Ship, self).__init__(loader, modelPath, parentNode, nodeName, Vec3(0, 0, 0), 30)
+        super(Ship, self).__init__(loader, modelPath, parentNode, nodeName, Vec3(0, 0, 0), 2)
         
         self.accept = accept
         self.taskManager = taskMgr
         
-        self.modelNode = loader.loadModel(modelPath)
-        self.modelNode.reparentTo(parentNode)
         self.modelNode.setPos(posVec)
         self.modelNode.setScale(scaleVec)
         self.modelNode.setName(nodeName)
@@ -38,13 +35,8 @@ class Ship(SphereCollideObject):
     def MoveForward(self, task):
         rate = 5
         trajectory = self.modelNode.parent.getRelativeVector(self.modelNode, Vec3.forward())
-        collisiontrajectory = self.collisionNode.parent.getRelativeVector(self.collisionNode, Vec3.forward())
-
         trajectory.normalize()
-        collisiontrajectory.normalize()
-
         self.modelNode.setFluidPos(self.modelNode.getPos() + trajectory * rate)
-        self.collisionNode.setFluidPos(self.collisionNode.getPos() + trajectory * rate)
         return Task.cont
 
     #LEFT
@@ -129,13 +121,8 @@ class Ship(SphereCollideObject):
     def MoveFaster(self, task):
         rate = 25
         trajectory = self.modelNode.parent.getRelativeVector(self.modelNode, Vec3.forward())
-        collisiontrajectory = self.collisionNode.parent.getRelativeVector(self.collisionNode, Vec3.forward())
-        
         trajectory.normalize()
-        collisiontrajectory.normalize()
-
         self.modelNode.setFluidPos(self.modelNode.getPos() + trajectory * rate)
-        self.collisionNode.setFluidPos(self.collisionNode.getPos() + trajectory * rate)
         return Task.cont
     
     #REVERSE
@@ -148,13 +135,8 @@ class Ship(SphereCollideObject):
     def MoveBack(self, task):
         rate = -5
         trajectory = self.modelNode.parent.getRelativeVector(self.modelNode, Vec3.forward())
-        collisiontrajectory = self.collisionNode.parent.getRelativeVector(self.collisionNode, Vec3.forward())
-
         trajectory.normalize()
-        collisiontrajectory.normalize()
-        
         self.modelNode.setFluidPos(self.modelNode.getPos() + trajectory * rate)
-        self.collisionNode.setFluidPos(self.collisionNode.getPos() + trajectory * rate)
 
         return Task.cont
 
