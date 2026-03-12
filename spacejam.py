@@ -8,7 +8,6 @@ import classes as classes
 import defensepaths as defensePath
 import Player as player
 
-#I'm curious what the difference is between "from import *" and "import as"? I had initially typed it as "from import *" before we actually did so following the lecture slides and changed it, but while I can tell there's a funcitonal difference, I'm having a hard time mentally defining it, if that makes sense.
 
 
 class SpaceJam(ShowBase):
